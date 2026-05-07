@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cours Maths — Première | maths-et-tiques.fr</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161d;
+    --surface2: #1a1e28;
+    --border: #252933;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --accent: #4f8ef7;
+    --accent2: #a78bfa;
+    --accent3: #34d399;
+    --accent4: #fb923c;
+    --accent5: #f472b6;
+
+    /* couleurs par chapitre */
+    --c1: #4f8ef7;
+    --c2: #a78bfa;
+    --c3: #34d399;
+    --c4: #fb923c;
+    --c5: #f472b6;
+    --c6: #38bdf8;
+    --c7: #facc15;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── SIDEBAR ── */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-logo {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-logo .site-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .sidebar-logo h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-section {
+    padding: 0.4rem 0;
+  }
+
+  .sidebar-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.5rem 1.5rem 0.25rem;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.5rem;
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+  }
+
+  .sidebar-link:hover, .sidebar-link.active {
+    color: var(--text);
+    background: var(--surface2);
+  }
+
+  .sidebar-link.active {
+    border-left-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .sidebar-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    padding: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 3rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.3);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h2 span { color: var(--accent); }
+
+  .hero p {
+    color: var(--muted);
+    max-width: 600px;
+    font-size: 0.9rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ── CHAPTER ── */
+  .chapter {
+    border-bottom: 1px solid var(--border);
+    padding: 3rem;
+  }
+
+  .chapter-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .chapter-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+    flex-shrink: 0;
+    user-select: none;
+    transition: color 0.3s;
+  }
+
+  .chapter:hover .chapter-number {
+    color: var(--border);
+  }
+
+  .chapter-meta {
+    flex: 1;
+  }
+
+  .chapter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+
+  .tag-spe { background: rgba(79,142,247,0.1); border-color: rgba(79,142,247,0.3); color: #4f8ef7; }
+  .tag-esm { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.3); color: #34d399; }
+  .tag-algo { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); color: #a78bfa; }
+
+  .chapter-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .chapter-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── COLORED ACCENT LINE ── */
+  .chapter-accent {
+    width: 40px; height: 3px;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  /* ── PANELS ── */
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .panel-header:hover { background: var(--surface2); }
+
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .panel-title .icon { font-size: 0.9rem; }
+
+  .panel-chevron {
+    font-size: 0.7rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+
+  .panel-chevron.open { transform: rotate(180deg); }
+
+  .panel-body {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+  }
+
+  .panel-body.open {
+    max-height: 2000px;
+    padding: 0.75rem 1.25rem 1.25rem;
+  }
+
+  /* ── COURSE FILES ── */
+  .course-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .file-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.15s;
+    border: 1px solid;
+  }
+
+  .file-btn.pdf {
+    background: rgba(251,146,60,0.1);
+    border-color: rgba(251,146,60,0.35);
+    color: #fb923c;
+  }
+  .file-btn.pdf:hover { background: rgba(251,146,60,0.2); }
+
+  .file-btn.word {
+    background: rgba(79,142,247,0.1);
+    border-color: rgba(79,142,247,0.35);
+    color: #4f8ef7;
+  }
+  .file-btn.word:hover { background: rgba(79,142,247,0.2); }
+
+  .file-btn.video {
+    background: rgba(244,63,94,0.1);
+    border-color: rgba(244,63,94,0.35);
+    color: #f87171;
+  }
+  .file-btn.video:hover { background: rgba(244,63,94,0.2); }
+
+  /* ── LINK LIST ── */
+  .link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .link-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    padding: 0.15rem 0;
+  }
+
+  .link-list li::before {
+    content: '→';
+    color: var(--muted);
+    flex-shrink: 0;
+    font-size: 0.65rem;
+  }
+
+  .link-list a {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .link-list a:hover { color: var(--text); }
+
+  /* ── SUBGROUP ── */
+  .subgroup-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0.9rem 0 0.35rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .subgroup-title:first-child { margin-top: 0; }
+
+  /* ── DIFF BADGE ── */
+  .diff-sources {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .diff-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── FULL-WIDTH PANEL ── */
+  .panels.full .panel {
+    grid-column: 1 / -1;
+  }
+
+  /* ── SEARCH ── */
+  .search-bar {
+    padding: 1rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 460px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.7rem center;
+  }
+
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .search-input::-webkit-input-placeholder { color: var(--muted); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 999;
+    transition: width 0.1s;
+    width: 0%;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer p { font-size: 0.75rem; color: var(--muted); }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .chapter { padding: 2rem 1.5rem; }
+    .hero { padding: 2.5rem 1.5rem 2rem; }
+    .search-bar { padding: 1rem 1.5rem; }
+    .mobile-menu-btn { display: flex; }
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem; right: 1.5rem;
+    width: 48px; height: 48px;
+    background: var(--accent);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 200;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 20px rgba(79,142,247,0.4);
+  }
+
+  /* ── Animations ── */
+  .chapter { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .chapter.visible { opacity: 1; transform: none; }
+
+  /* ── NOTE BAND ── */
+  .note-band {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(52,211,153,0.06);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    color: #34d399;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- ── SIDEBAR ── -->
+<div class="layout">
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="site-name">maths-et-tiques.fr</span>
+    <h1>Cours de<br>Première</h1>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Spécialité · Algèbre</div>
+    <a class="sidebar-link" href="#ch1" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#4f8ef7"></span>Second Degré
+    </a>
+    <a class="sidebar-link" href="#ch2" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#a78bfa"></span>Suites — Généralités
+    </a>
+    <a class="sidebar-link" href="#ch3" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#34d399"></span>Suites Arith. & Géom.
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Spécialité · Analyse</div>
+    <a class="sidebar-link" href="#ch4" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#fb923c"></span>Dérivation
+    </a>
+    <a class="sidebar-link" href="#ch5" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#f472b6"></span>Fonction Exponentielle
+    </a>
+    <a class="sidebar-link" href="#ch6" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#38bdf8"></span>Fonctions Trigonométriques
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Spécialité · Géométrie</div>
+    <a class="sidebar-link" href="#ch7" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#facc15"></span>Produit Scalaire
+    </a>
+    <a class="sidebar-link" href="#ch8" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#4f8ef7"></span>Géométrie Repérée
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Spécialité · Proba / Stats</div>
+    <a class="sidebar-link" href="#ch9" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#a78bfa"></span>Probabilités Conditionnelles
+    </a>
+    <a class="sidebar-link" href="#ch10" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#34d399"></span>Variables Aléatoires
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Ens. Scientifique (ESM)</div>
+    <a class="sidebar-link" href="#ch11" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#fb923c"></span>Automatismes
+    </a>
+    <a class="sidebar-link" href="#ch2" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#f472b6"></span>Les Suites ↑ (regroupé)
+    </a>
+    <a class="sidebar-link" href="#ch12" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#38bdf8"></span>Fonctions Affines
+    </a>
+    <a class="sidebar-link" href="#ch5" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#facc15"></span>Fonctions Expo. ↑ (regroupé)
+    </a>
+    <a class="sidebar-link" href="#ch4" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#4f8ef7"></span>Dérivation ↑ (regroupé)
+    </a>
+    <a class="sidebar-link" href="#ch13" onclick="closeSidebar()">
+      <span class="sidebar-dot" style="background:#a78bfa"></span>Stats & Probabilités (ESM)
+    </a>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">📐 Nouveaux programmes 2019 (Spé) & 2022 (ESM)</div>
+    <h2>Cours de Maths<br><span>Classe de Première</span></h2>
+    <p>Tous les cours, méthodes, exercices corrigés et vidéos de <strong>maths-et-tiques.fr</strong> (Yvan Monka). Les chapitres présents en Spécialité <em>et</em> en ESM sont regroupés.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-number">13</span><span class="stat-label">chapitres regroupés</span></div>
+      <div class="stat"><span class="stat-number">10</span><span class="stat-label">chapitres Spécialité</span></div>
+      <div class="stat"><span class="stat-number">6</span><span class="stat-label">chapitres ESM</span></div>
+      <div class="stat"><span class="stat-number">3</span><span class="stat-label">regroupements</span></div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <input class="search-input" type="text" placeholder="Rechercher un chapitre, une notion…" id="searchInput">
+  </div>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 1 — SECOND DEGRÉ
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-number">01</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag tag-algo">Algèbre</span>
+        </div>
+        <div class="chapter-title">Second Degré</div>
+        <div class="chapter-desc">Fonctions du 2nd degré · forme canonique · discriminant · signe du trinôme · inéquations</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c1)"></div>
+
+    <div class="panels">
+      <!-- COURS -->
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours — Pour savoir</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Chapitre 1 — Fonctions du 2nd degré</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19SecdegP1M.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19SecdegP1M.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/WVYWdN13kPE" target="_blank">▶ Vidéo</a>
+          </div>
+          <div class="subgroup-title">Chapitre 2 — Équations du 2nd degré</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19SecdegP2M.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19SecdegP2M.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/tc9wvbYuZts" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÉTHODES -->
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes — Pour comprendre</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Forme canonique</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/JcT6kph74O0" target="_blank">Déterminer la forme canonique (1)</a></li>
+            <li><a href="https://youtu.be/OQHf-hX9JhM" target="_blank">Déterminer la forme canonique (2)</a></li>
+            <li><a href="https://youtu.be/M3vCMgYzvM8" target="_blank">Reconnaître la forme canonique</a></li>
+          </ul>
+          <div class="subgroup-title">Variations & extremum</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/7IOCVfUnoz0" target="_blank">Caractéristiques d'une parabole (axe, sommet)</a></li>
+            <li><a href="https://youtu.be/KgsQI1ksdbA" target="_blank">Déterminer l'extremum (1)</a></li>
+            <li><a href="https://youtu.be/KK76UohzUW4" target="_blank">Déterminer l'extremum (2)</a></li>
+            <li><a href="https://youtu.be/pXWDPw3B3ms" target="_blank">Déterminer les variations et l'extremum</a></li>
+          </ul>
+          <div class="subgroup-title">Équations du 2nd degré</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/youUIZ-wsYk" target="_blank">Résoudre une équation du 2nd degré (1)</a></li>
+            <li><a href="https://youtu.be/RhHheS2Wpyk" target="_blank">Résoudre une équation du 2nd degré (2)</a></li>
+            <li><a href="https://youtu.be/v6fI2RqCCiE" target="_blank">Résoudre une équation du 2nd degré (3)</a></li>
+            <li><a href="https://youtu.be/Mbwqlq_7Iis" target="_blank">Résoudre un problème du 2nd degré</a></li>
+            <li><a href="https://youtu.be/UTcryCyG29s" target="_blank">Formules de somme et produit de racines</a></li>
+          </ul>
+          <div class="subgroup-title">Signe d'un trinôme & inéquations</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/eKrZK1Iisc8" target="_blank">Factoriser un trinôme</a></li>
+            <li><a href="https://youtu.be/JiokX41_2nw" target="_blank">Déterminer les racines d'une fonction du 2nd degré</a></li>
+            <li><a href="https://youtu.be/lQxJhGg2GQY" target="_blank">Forme canonique, développée ou factorisée</a></li>
+            <li><a href="https://youtu.be/JCVotquzIIA" target="_blank">Signe d'une fonction du 2nd degré (forme factorisée)</a></li>
+            <li><a href="https://youtu.be/sFNW9KVsTMY" target="_blank">Étudier le signe d'un trinôme (1)</a></li>
+            <li><a href="https://youtu.be/pT4xtI2Yg2Q" target="_blank">Étudier le signe d'un trinôme (2)</a></li>
+            <li><a href="https://youtu.be/AEL4qKKNvp8" target="_blank">Résoudre une inéquation via le signe d'un trinôme</a></li>
+            <li><a href="https://youtu.be/EyxP5HIfyF4" target="_blank">Position relative de deux courbes</a></li>
+          </ul>
+          <div class="subgroup-title">Tutos calculatrices</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/ncUUcQuVeGY" target="_blank">Résoudre une équation du 2nd degré — TI</a></li>
+            <li><a href="https://youtu.be/CbBoo1DDOBc" target="_blank">Résoudre une équation du 2nd degré — Casio</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DÉMOS + EXERCICES -->
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">✏️</span> Démos & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Démonstrations au programme</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/7VFpZ63Tgis" target="_blank">Solutions d'une équation du second degré</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/M8DIZyBMBRI" target="_blank">Déterminer la forme canonique</a></li>
+            <li><a href="https://youtu.be/af9nxmTuXek" target="_blank">Déterminer le sommet d'une parabole</a></li>
+            <li><a href="https://youtu.be/E_1yx7V2fOA" target="_blank">Expression d'une fonction (sommet donné)</a></li>
+            <li><a href="https://youtu.be/Gn-BfaYWHZo" target="_blank">Expression d'une fonction (trois points)</a></li>
+            <li><a href="https://youtu.be/Sfe9lTv9Qwg" target="_blank">Variations d'une fonction du 2nd degré</a></li>
+            <li><a href="https://youtu.be/OF6BS5f5khs" target="_blank">Équation du 2nd degré (cas particuliers)</a></li>
+            <li><a href="https://youtu.be/s8btLYU_46s" target="_blank">Équation se ramenant au 2nd degré</a></li>
+            <li><a href="https://youtu.be/eQEl6fJgpXc" target="_blank">Factoriser un trinôme</a></li>
+            <li><a href="https://youtu.be/89qx7KTCCdg" target="_blank">Inéquation via le signe d'un trinôme (1)</a></li>
+            <li><a href="https://youtu.be/_23V3lX-jxo" target="_blank">Inéquation via le signe d'un trinôme (2)</a></li>
+            <li><a href="https://youtu.be/OWoaJjL9Hy4" target="_blank">Position relative de deux courbes</a></li>
+            <li><a href="https://youtu.be/DP81hGC643E" target="_blank">QCM Pour s'évaluer (1)</a></li>
+            <li><a href="https://youtu.be/Dezqkf7-i3I" target="_blank">QCM Pour s'évaluer (2)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 2 — SUITES (REGROUPÉ SPÉ + ESM)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-number">02</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag tag-esm">ESM</span>
+          <span class="tag tag-algo">Algèbre</span>
+        </div>
+        <div class="chapter-title">Généralités sur les Suites</div>
+        <div class="chapter-desc">Notion de suite · formule explicite · récurrence · variations · limite — Chapitres Spé et ESM regroupés</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c2)"></div>
+
+    <div class="note-band">
+      ⚡ Ce chapitre regroupe le cours Spécialité <strong>Généralités sur les suites</strong> et les chapitres 1–3 ESM <strong>Les suites</strong>. Les ressources communes sont listées une seule fois.
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Spécialité</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19SuitesP1M.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19SuitesP1M.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/8I6dotcdW3I" target="_blank">▶ Vidéo</a>
+          </div>
+          <div class="subgroup-title">ESM — Chapitre 1</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22SuitesOO1.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22SuitesOO1.pdf" target="_blank">📕 PDF</a>
+          </div>
+          <div class="subgroup-title">ESM — Chapitre 2</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22SuitesOO2.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22SuitesOO2.pdf" target="_blank">📕 PDF</a>
+          </div>
+          <div class="subgroup-title">ESM — Chapitre 3</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22SuitesOO3.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22SuitesOO3.pdf" target="_blank">📕 PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Notion de suite</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/HacflVQ7DIE" target="_blank">Calculer les premiers termes (1)</a></li>
+            <li><a href="https://youtu.be/C38g2fHFttw" target="_blank">Calculer les premiers termes (2)</a></li>
+            <li><a href="https://youtu.be/A8lSieLmhbQ" target="_blank">Déterminer l'expression d'une suite</a></li>
+            <li><a href="https://youtu.be/VpSK4uLTFhM" target="_blank">Représenter graphiquement une suite</a></li>
+          </ul>
+          <div class="subgroup-title">Variation</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/DFz8LDKCw9Y" target="_blank">Sens de variation d'une suite (1)</a></li>
+            <li><a href="https://youtu.be/2DYDVje53ss" target="_blank">Sens de variation d'une suite (2)</a></li>
+            <li><a href="https://youtu.be/dPR3GyQycH0" target="_blank">Variation à l'aide d'une fonction associée</a></li>
+          </ul>
+          <div class="subgroup-title">Limite</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/CsBorh8LLyE" target="_blank">Limite d'une suite — Version 1</a></li>
+            <li><a href="https://youtu.be/0CC-EqOH92c" target="_blank">Limite d'une suite — Version 2</a></li>
+          </ul>
+          <div class="subgroup-title">Tutos calculatrices</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/bvXdeTRQrD0" target="_blank">Calculer des termes d'une suite (1) — TI</a></li>
+            <li><a href="https://youtu.be/W71ZJei7ZPQ" target="_blank">Calculer des termes d'une suite (1) — Casio</a></li>
+            <li><a href="https://youtu.be/D5OAi2_h_bw" target="_blank">Calculer des termes d'une suite (2) — TI</a></li>
+            <li><a href="https://youtu.be/x_lNORNjrqQ" target="_blank">Calculer des termes d'une suite (2) — Casio</a></li>
+            <li><a href="https://youtu.be/1OVioxtkm2A" target="_blank">Calculer des termes d'une suite — HP</a></li>
+            <li><a href="https://youtu.be/whjDbPyJMXk" target="_blank">Représenter les 1ers termes — TI</a></li>
+            <li><a href="https://youtu.be/ycFal1d_QcE" target="_blank">Représenter les 1ers termes — Casio</a></li>
+          </ul>
+          <div class="subgroup-title">Algorithmes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/4a1b8NnG8Vw" target="_blank">Algo : Calculer des termes — TI</a></li>
+            <li><a href="https://youtu.be/1E2M8S0Wn3U" target="_blank">Algo : Calculer des termes — Casio</a></li>
+            <li><a href="https://youtu.be/CYDUNYndHfg" target="_blank">Algo : Calculer des termes — Python</a></li>
+            <li><a href="https://youtu.be/Kza3KBjjsM0" target="_blank">Algo : Déterminer un seuil — TI</a></li>
+            <li><a href="https://youtu.be/9HhEeMWimNo" target="_blank">Algo : Déterminer un seuil — Casio</a></li>
+            <li><a href="https://youtu.be/vJmpzwhaka8" target="_blank">Algo : Déterminer un seuil — Python</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">✏️</span> Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <ul class="link-list">
+            <li><a href="https://youtu.be/b09heV09gU0" target="_blank">Déterminer l'expression d'une suite</a></li>
+            <li><a href="https://youtu.be/9Kox2DDd1wI" target="_blank">Résoudre un problème avec une suite</a></li>
+            <li><a href="https://youtu.be/ES20x2Zb8UU" target="_blank">Sens de variation d'une suite (1)</a></li>
+            <li><a href="https://youtu.be/qgaBEKoQp1M" target="_blank">Sens de variation d'une suite (2)</a></li>
+            <li><a href="https://youtu.be/qwMmwyKxK0E" target="_blank">QCM pour s'évaluer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 3 — SUITES ARITH & GÉO
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-number">03</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag tag-algo">Algèbre</span>
+        </div>
+        <div class="chapter-title">Suites Arithmétiques & Géométriques</div>
+        <div class="chapter-desc">Terme général · sens de variation · somme des termes · applications</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c3)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19SuitesP2M.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19SuitesP2M.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/05UHsy9G4M4" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Suites arithmétiques</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/pHq6oClOylU" target="_blank">Reconnaître une suite arithmétique / géométrique</a></li>
+            <li><a href="https://youtu.be/6O0KhPMHvBA" target="_blank">Expression générale d'une suite arithmétique</a></li>
+            <li><a href="https://youtu.be/YCokWYcBBOk" target="_blank">Démontrer qu'une suite est arithmétique</a></li>
+            <li><a href="https://youtu.be/iEuoMgBblz4" target="_blank">Déterminer une suite arithmétique</a></li>
+            <li><a href="https://youtu.be/R3sHNwOb02M" target="_blank">Sens de variation d'une suite arithmétique</a></li>
+          </ul>
+          <div class="subgroup-title">Suites géométriques</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/WTmdtbQpa0c" target="_blank">Expression générale d'une suite géométrique</a></li>
+            <li><a href="https://youtu.be/YPbEHxuMaeQ" target="_blank">Démontrer qu'une suite est géométrique</a></li>
+            <li><a href="https://youtu.be/wUfleWpRr10" target="_blank">Déterminer une suite géométrique</a></li>
+            <li><a href="https://youtu.be/vLshnJqW-64" target="_blank">Sens de variation d'une suite géométrique</a></li>
+          </ul>
+          <div class="subgroup-title">Somme des termes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/WeDtB9ZUTHs" target="_blank">Somme des termes arithmétiques (1)</a></li>
+            <li><a href="https://youtu.be/iSfevWwk8e4" target="_blank">Somme des termes arithmétiques (2)</a></li>
+            <li><a href="https://youtu.be/rIaYMXPbWE8" target="_blank">Somme des termes géométriques (1)</a></li>
+            <li><a href="https://youtu.be/XcszOqP9sbk" target="_blank">Somme des termes géométriques (2)</a></li>
+            <li><a href="https://youtu.be/gUkOjvAiZGA" target="_blank">Somme des termes géométriques (3)</a></li>
+            <li><a href="https://youtu.be/0oj1h8jwr-g" target="_blank">Algo : Somme des termes — TI</a></li>
+            <li><a href="https://youtu.be/Y09Mgn_DgOA" target="_blank">Algo : Somme des termes — Casio</a></li>
+            <li><a href="https://youtu.be/_3bwycUCtmg" target="_blank">Algo : Somme des termes — Python</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">✏️</span> Démos & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Démonstrations au programme</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/Jn4_xM_ZJD0" target="_blank">Terme général d'une suite arithmétique</a></li>
+            <li><a href="https://youtu.be/OpLU8Ci1GnE" target="_blank">Terme général d'une suite géométrique</a></li>
+            <li><a href="https://youtu.be/-G3FWv5Bkzk" target="_blank">Somme des termes — suite arithmétique</a></li>
+            <li><a href="https://youtu.be/7msY7aEe084" target="_blank">Somme des termes — suite géométrique</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/dnNfQB7HbGs" target="_blank">Déterminer la nature d'une suite</a></li>
+            <li><a href="https://youtu.be/Zp3_pBwdM7o" target="_blank">Sens de variation d'une suite géométrique</a></li>
+            <li><a href="https://youtu.be/kmfu5EYf4ZQ" target="_blank">Somme d'une suite arithmétique (1)</a></li>
+            <li><a href="https://youtu.be/CDMol9f8vgc" target="_blank">Somme d'une suite arithmétique (2)</a></li>
+            <li><a href="https://youtu.be/eSDrE1phUXY" target="_blank">Somme d'une suite géométrique</a></li>
+            <li><a href="https://youtu.be/hDU-SqU-ohc" target="_blank">QCM Pour s'évaluer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 4 — DÉRIVATION (REGROUPÉ SPÉ + ESM)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-number">04</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag tag-esm">ESM</span>
+          <span class="tag" style="background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fb923c">Analyse</span>
+        </div>
+        <div class="chapter-title">Dérivation</div>
+        <div class="chapter-desc">Nombre dérivé · tangente · fonctions dérivées usuelles · variations — Spé (3 chapitres) + ESM (2 chapitres) regroupés</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c4)"></div>
+
+    <div class="note-band">
+      ⚡ Ce chapitre regroupe les 3 chapitres Spécialité <strong>Dérivation</strong> et les 2 chapitres ESM <strong>Dérivation</strong>. Les méthodes communes apparaissent une seule fois.
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Spécialité — Chapitres 1, 2, 3</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19DeriP1M.docx" target="_blank">📄 Word Ch.1</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19DeriP1M.pdf" target="_blank">📕 PDF Ch.1</a>
+          </div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19DeriP2M.docx" target="_blank">📄 Word Ch.2</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19DeriP2M.pdf" target="_blank">📕 PDF Ch.2</a>
+          </div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19DeriP3M.docx" target="_blank">📄 Word Ch.3</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19DeriP3M.pdf" target="_blank">📕 PDF Ch.3</a>
+            <a class="file-btn video" href="https://youtu.be/uMSNllPBFhQ" target="_blank">▶ Vidéo Spé</a>
+          </div>
+          <div class="subgroup-title">ESM — Chapitres 1 & 2</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22DeriOO1.docx" target="_blank">📄 Word Ch.1</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22DeriOO1.pdf" target="_blank">📕 PDF Ch.1</a>
+          </div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22DeriOO2.docx" target="_blank">📄 Word Ch.2</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22DeriOO2.pdf" target="_blank">📕 PDF Ch.2</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Nombre dérivé</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/UmT0Gov6yyE" target="_blank">Calculer le nombre dérivé (1)</a></li>
+            <li><a href="https://youtu.be/Iv5_mw1EYBE" target="_blank">Calculer le nombre dérivé (2)</a></li>
+            <li><a href="https://youtu.be/f7AuwNAagAQ" target="_blank">Déterminer graphiquement le nombre dérivé</a></li>
+          </ul>
+          <div class="subgroup-title">Valeur absolue</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/O61rmOdXg9I" target="_blank">Variations de la fonction valeur absolue</a></li>
+            <li><a href="https://youtu.be/lolvtBGxcYQ" target="_blank">Résoudre graphiquement une inéquation avec valeur absolue</a></li>
+            <li><a href="https://youtu.be/ZKtxnTaIvvs" target="_blank">Non dérivabilité de |x| en 0</a></li>
+          </ul>
+          <div class="subgroup-title">Tangente</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/0jhxK55jONs" target="_blank">Graphiquement : nombre dérivé et équation de tangente</a></li>
+            <li><a href="https://youtu.be/7-z62dSkkTQ" target="_blank">Déterminer graphiquement une tangente</a></li>
+            <li><a href="https://youtu.be/fKEGoo50Xmo" target="_blank">Équation d'une tangente à une courbe</a></li>
+            <li><a href="https://youtu.be/zWFF5tXVYjQ" target="_blank">Afficher une tangente — TI</a></li>
+            <li><a href="https://youtu.be/VdmmZgFdaz0" target="_blank">Afficher une tangente — Casio</a></li>
+          </ul>
+          <div class="subgroup-title">Fonctions dérivées</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/9Mann4wOGJA" target="_blank">Dériver les fonctions usuelles</a></li>
+            <li><a href="https://youtu.be/ehHoLK98Ht0" target="_blank">Dériver une fonction (1)</a></li>
+            <li><a href="https://youtu.be/1fOGueiO_zk" target="_blank">Dériver une fonction (2)</a></li>
+            <li><a href="https://youtu.be/OMsZNNIIdrw" target="_blank">Dériver une fonction (3)</a></li>
+            <li><a href="https://youtu.be/jOuC7aq3YkM" target="_blank">Dériver une fonction (4)</a></li>
+            <li><a href="https://youtu.be/-MfEczGz_6Y" target="_blank">Dériver une fonction (5)</a></li>
+            <li><a href="https://youtu.be/aFkPQkg0p-A" target="_blank">Dériver une fonction composée f(ax+b)</a></li>
+            <li><a href="https://youtu.be/bELc3OM9osQ" target="_blank">Équation de la tangente (fonction dérivée)</a></li>
+          </ul>
+          <div class="subgroup-title">Variations via la dérivée</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/dPIlTNyBCiw" target="_blank">Signe de la dérivée ↔ variations</a></li>
+            <li><a href="https://youtu.be/gPhyoY-d_VU" target="_blank">Représenter graphiquement une fonction</a></li>
+            <li><a href="https://youtu.be/23_Ba3N0fu4" target="_blank">Étudier les variations d'une fonction</a></li>
+            <li><a href="https://youtu.be/5NrV-TXme_8" target="_blank">Étudier les variations d'une fonction rationnelle</a></li>
+            <li><a href="https://youtu.be/zxyKLqnlMIk" target="_blank">Déterminer un extremum</a></li>
+            <li><a href="https://youtu.be/nLoOEQ9mLW0" target="_blank">Signe d'une fonction à l'aide des variations</a></li>
+            <li><a href="https://youtu.be/ON14GJOYogw" target="_blank">Établir une inégalité à l'aide des variations</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">✏️</span> Démos & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Démonstrations au programme</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/Jj0ql6-o2Uo" target="_blank">Équation de la tangente à une courbe</a></li>
+            <li><a href="https://youtu.be/-nRmE8yFSSg" target="_blank">Dérivée de la fonction carré</a></li>
+            <li><a href="https://youtu.be/rQ1XfMN5pdk" target="_blank">Dérivée de la fonction inverse</a></li>
+            <li><a href="https://youtu.be/N5wnOoLDrjo" target="_blank">√x non dérivable en 0</a></li>
+            <li><a href="https://youtu.be/PI4A8TLGnxE" target="_blank">(uv)' = u'v + uv'</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/5J97eYCh1m4" target="_blank">Calculer le nombre dérivé (Niv. 1)</a></li>
+            <li><a href="https://youtu.be/zK-fkmz8w9A" target="_blank">Calculer le nombre dérivé (Niv. 2)</a></li>
+            <li><a href="https://youtu.be/q6AdIPkldNU" target="_blank">Tangente à une courbe (graphique)</a></li>
+            <li><a href="https://youtu.be/6C1O0BtNG30" target="_blank">Dériver une fonction (Niv. 1)</a></li>
+            <li><a href="https://youtu.be/g7UXoUcRMhE" target="_blank">Dériver une fonction (Niv. 2)</a></li>
+            <li><a href="https://youtu.be/8GUkUdAD4FA" target="_blank">Équation de la tangente à une courbe</a></li>
+            <li><a href="https://youtu.be/9tWt9x4P3t0" target="_blank">Tangente horizontale à une courbe</a></li>
+            <li><a href="https://youtu.be/R0ej4icrNnk" target="_blank">Reconnaître graphiquement f et f'</a></li>
+            <li><a href="https://youtu.be/EXTobPZzORo" target="_blank">Variations d'une fonction (Niv. 1)</a></li>
+            <li><a href="https://youtu.be/ZDfYS9xQJDo" target="_blank">Variations d'une fonction (Niv. 2)</a></li>
+            <li><a href="https://youtu.be/V0gLF8iWARs" target="_blank">Problème d'optimisation (2nd degré)</a></li>
+            <li><a href="https://youtu.be/SHu4CmIqcA4" target="_blank">QCM Pour s'évaluer (1)</a></li>
+            <li><a href="https://youtu.be/oKfPNuRdvS0" target="_blank">QCM Pour s'évaluer (2)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 5 — FONCTION EXPONENTIELLE (REGROUPÉ)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-number">05</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag tag-esm">ESM</span>
+          <span class="tag" style="background:rgba(244,114,182,0.1);border-color:rgba(244,114,182,0.3);color:#f472b6">Analyse</span>
+        </div>
+        <div class="chapter-title">Fonction Exponentielle</div>
+        <div class="chapter-desc">Propriétés de exp · dérivation · résolution d'équations et inéquations · fonctions e^(kt) — Spé + ESM regroupés</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c5)"></div>
+
+    <div class="note-band">
+      ⚡ Le cours ESM <strong>Fonctions exponentielles</strong> et le cours Spé sont regroupés ici.
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Spécialité</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19ExpoPM.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19ExpoPM.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/aD03wqgxexk" target="_blank">▶ Vidéo</a>
+          </div>
+          <div class="subgroup-title">ESM</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22FEOO.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22FEOO.pdf" target="_blank">📕 PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/qDFjeFyA_OY" target="_blank">Appliquer les formules sur l'exponentielle</a></li>
+            <li><a href="https://youtu.be/dA73-HT-I_Y" target="_blank">Résoudre une équation avec des exponentielles</a></li>
+            <li><a href="https://youtu.be/d28Fb-zBe4Y" target="_blank">Résoudre une inéquation avec des exponentielles</a></li>
+            <li><a href="https://youtu.be/XcMePHk6Ilk" target="_blank">Dériver la fonction exponentielle</a></li>
+            <li><a href="https://youtu.be/_MA1aW8ldjo" target="_blank">Étudier une fonction avec exponentielle</a></li>
+            <li><a href="https://youtu.be/RlyFEcx5Y3E" target="_blank">Dériver une fonction e^(kt)</a></li>
+            <li><a href="https://youtu.be/lsLQwiB9Nrg" target="_blank">Étudier une fonction e^(kt) en contexte</a></li>
+            <li><a href="https://youtu.be/hKh-ry9AAO0" target="_blank">Suite géométrique avec exponentielle</a></li>
+            <li><a href="https://youtu.be/PHTOZid0kzM" target="_blank">Simplifier une expression (ESM)</a></li>
+            <li><a href="https://youtu.be/YQoR7CFM_1U" target="_blank">Variations d'une fonction exponentielle (ESM)</a></li>
+            <li><a href="https://youtu.be/maK64g-y3gA" target="_blank">Utiliser une fonction expo pour un problème (ESM)</a></li>
+            <li><a href="https://youtu.be/8ocIhl-SFuQ" target="_blank">Taux d'évolution moyen (ESM)</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/q-IVbPIzSHs" target="_blank">Appliquer les formules</a></li>
+            <li><a href="https://youtu.be/iPlKU7yZyRQ" target="_blank">Résoudre une équation</a></li>
+            <li><a href="https://youtu.be/ItHWX02UKmk" target="_blank">Résoudre une équation (expert)</a></li>
+            <li><a href="https://youtu.be/X6n4T9c9ww4" target="_blank">Résoudre une inéquation</a></li>
+            <li><a href="https://youtu.be/0hWFUhrypsM" target="_blank">Dériver une fonction avec exponentielles</a></li>
+            <li><a href="https://youtu.be/RA4ygCl3ViE" target="_blank">Position relative de exp et y=x</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 6 — FONCTIONS TRIGONOMÉTRIQUES
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-number">06</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag" style="background:rgba(56,189,248,0.1);border-color:rgba(56,189,248,0.3);color:#38bdf8">Analyse</span>
+        </div>
+        <div class="chapter-title">Fonctions Trigonométriques</div>
+        <div class="chapter-desc">Cercle trigonométrique · radians · cos, sin · équations trigo · parité · périodicité</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c6)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19TrigoP1M.docx" target="_blank">📄 Word Ch.1</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19TrigoP1M.pdf" target="_blank">📕 PDF Ch.1</a>
+          </div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19TrigoP2M.docx" target="_blank">📄 Word Ch.2</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19TrigoP2M.pdf" target="_blank">📕 PDF Ch.2</a>
+            <a class="file-btn video" href="https://youtu.be/wJjb3CSS3cg" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Cercle trigonométrique</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/-fu9bSBKM00" target="_blank">Passer des degrés aux radians et vice versa</a></li>
+            <li><a href="https://youtu.be/NGZKQf9eLyg" target="_blank">Lire une valeur sur le cercle trigo</a></li>
+            <li><a href="https://youtu.be/7VAFJXLB9u0" target="_blank">Placer un point sur le cercle trigo (1)</a></li>
+            <li><a href="https://youtu.be/jE3ibn-8fDI" target="_blank">Placer un point sur le cercle trigo (2)</a></li>
+            <li><a href="https://youtu.be/Fk_YO30jXn8" target="_blank">Placer un point par enroulement</a></li>
+            <li><a href="https://youtu.be/BODMdi2S3rY" target="_blank">Donner la mesure principale d'un angle</a></li>
+            <li><a href="https://youtu.be/1l3SzSamBRk" target="_blank">Lire en degrés : valeurs de cos et sin</a></li>
+            <li><a href="https://youtu.be/m6tuif8ZpFY" target="_blank">Lire en radians : valeurs de cos et sin</a></li>
+          </ul>
+          <div class="subgroup-title">Équations trigonométriques</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/VfzFlEId56A" target="_blank">Calculer le cosinus connaissant le sinus</a></li>
+            <li><a href="https://youtu.be/VbfA7HGIeLw" target="_blank">Résoudre une équation trigonométrique (1)</a></li>
+            <li><a href="https://youtu.be/NlV2zKJtvc8" target="_blank">Résoudre une équation trigonométrique (2)</a></li>
+          </ul>
+          <div class="subgroup-title">Parité & périodicité</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/RV3Bi06nQOs" target="_blank">Reconnaître parité et périodicité graphiquement</a></li>
+            <li><a href="https://youtu.be/hrbgxnCZW_I" target="_blank">Parité d'une fonction trigonométrique</a></li>
+            <li><a href="https://youtu.be/KbCpqXSvR8M" target="_blank">Compléter un graphique par parité et périodicité</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">✏️</span> Démos & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Démonstrations au programme</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/b2-EQupZUp8" target="_blank">sin(π/4) = √2/2</a></li>
+            <li><a href="https://youtu.be/4R1i5Vj72Ls" target="_blank">cos(π/3) = 1/2, sin(π/3) = √3/2</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/bQHKUkIs5uo" target="_blank">Placer un point par enroulement</a></li>
+            <li><a href="https://youtu.be/QtcXTCLDJSk" target="_blank">Lire en degrés cos et sin</a></li>
+            <li><a href="https://youtu.be/nnkUKwwMoro" target="_blank">Résoudre une équation trigonométrique (1)</a></li>
+            <li><a href="https://youtu.be/FChmUolhDpg" target="_blank">Résoudre une équation trigonométrique (2)</a></li>
+            <li><a href="https://youtu.be/WuYZttCnZSs" target="_blank">QCM pour s'évaluer (1)</a></li>
+            <li><a href="https://youtu.be/fsNOAYYl8Pg" target="_blank">QCM pour s'évaluer (2)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 7 — PRODUIT SCALAIRE
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch7">
+    <div class="chapter-header">
+      <div class="chapter-number">07</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag" style="background:rgba(250,204,21,0.1);border-color:rgba(250,204,21,0.3);color:#facc15">Géométrie</span>
+        </div>
+        <div class="chapter-title">Produit Scalaire</div>
+        <div class="chapter-desc">Définitions et formules · cosinus · théorème d'Al Kashi · orthogonalité · coordonnées</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c7)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19Prodscal1M.docx" target="_blank">📄 Word Ch.1</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19Prodscal1M.pdf" target="_blank">📕 PDF Ch.1</a>
+          </div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19Prodscal2M.docx" target="_blank">📄 Word Ch.2</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19Prodscal2M.pdf" target="_blank">📕 PDF Ch.2</a>
+            <a class="file-btn video" href="https://youtu.be/dII7myZuLvo" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Démos & Exercices</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/dfxz40fK0UI" target="_blank">Produit scalaire à l'aide du cosinus</a></li>
+            <li><a href="https://youtu.be/_SDj-fG1S18" target="_blank">Formules : symétrie, bilinéarité…</a></li>
+            <li><a href="https://youtu.be/iNsm05JimgA" target="_blank">Produit scalaire à l'aide des normes</a></li>
+            <li><a href="https://youtu.be/SeFjmbOGhVc" target="_blank">Théorème d'Al Kashi (1)</a></li>
+            <li><a href="https://youtu.be/-cQQAjHJ0Kc" target="_blank">Théorème d'Al Kashi (2)</a></li>
+            <li><a href="https://youtu.be/2eTsaa2vVnI" target="_blank">Produit scalaire par projection</a></li>
+            <li><a href="https://youtu.be/P0nKS-cTEO0" target="_blank">Produit scalaire par bilinéarité</a></li>
+            <li><a href="https://youtu.be/K4Izn5xB_Qk" target="_blank">Calculer une longueur via le produit scalaire</a></li>
+            <li><a href="https://youtu.be/bUARS-dthLM" target="_blank">Appliquer MA⃗.MB⃗ = 0</a></li>
+            <li><a href="https://youtu.be/aOLRbG0IibY" target="_blank">Produit scalaire à l'aide des coordonnées</a></li>
+            <li><a href="https://youtu.be/cTtV4DsoMLQ" target="_blank">Orthogonalité des vecteurs (1)</a></li>
+            <li><a href="https://youtu.be/-Hr28g0PFu0" target="_blank">Orthogonalité des vecteurs (2)</a></li>
+            <li><a href="https://youtu.be/Ok6dZG8WIL8" target="_blank">Plusieurs formules du produit scalaire (1)</a></li>
+            <li><a href="https://youtu.be/ca_pW79ik9A" target="_blank">Plusieurs formules du produit scalaire (2)</a></li>
+          </ul>
+          <div class="subgroup-title">Démonstrations au programme</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/34OJiQ_4-N4" target="_blank">Le théorème d'Al Kashi</a></li>
+            <li><a href="https://youtu.be/D3n8aYsSQLA" target="_blank">Ensemble des M tel que MA⃗.MB⃗ = 0</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/tfe2_jzyutY" target="_blank">Calculer un produit scalaire (1)</a></li>
+            <li><a href="https://youtu.be/xueCXMtnrZI" target="_blank">Calculer un produit scalaire (2)</a></li>
+            <li><a href="https://youtu.be/8nEinL_C5Os" target="_blank">Produit scalaire à partir des coordonnées</a></li>
+            <li><a href="https://youtu.be/TsLiyVJZN9Q" target="_blank">QCM Pour s'évaluer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 8 — GÉOMÉTRIE REPÉRÉE
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch8">
+    <div class="chapter-header">
+      <div class="chapter-number">08</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag" style="background:rgba(250,204,21,0.1);border-color:rgba(250,204,21,0.3);color:#facc15">Géométrie</span>
+        </div>
+        <div class="chapter-title">Géométrie Repérée</div>
+        <div class="chapter-desc">Équation cartésienne de droite · vecteur normal · projeté orthogonal · équation de cercle</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c1)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19RepM.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19RepM.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/EehP4SFpo5c" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Équations de droites</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/NosYmlLLFB4" target="_blank">Équation cartésienne d'une droite (1)</a></li>
+            <li><a href="https://youtu.be/i5WD8IZdEqk" target="_blank">Équation cartésienne d'une droite (2)</a></li>
+            <li><a href="https://youtu.be/LOW6XvpaRQg" target="_blank">Cartésienne ↔ équation réduite</a></li>
+            <li><a href="https://youtu.be/EchUv2cGtzo" target="_blank">Tracer une droite (équation cartésienne)</a></li>
+            <li><a href="https://youtu.be/NjsVdVolhvU" target="_blank">Démontrer que deux droites sont parallèles</a></li>
+            <li><a href="https://youtu.be/oR5QoWCiDIo" target="_blank">Équation cartésienne (vecteur normal)</a></li>
+            <li><a href="https://youtu.be/-HNUbyU72Pc" target="_blank">Projeté orthogonal d'un point sur une droite</a></li>
+          </ul>
+          <div class="subgroup-title">Équations de cercles</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/Nr4Fcr-GhXM" target="_blank">Équation de cercle (1)</a></li>
+            <li><a href="https://youtu.be/nNidpOAhLE8" target="_blank">Équation de cercle (2)</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/RhSkkab6U_g" target="_blank">Équation cartésienne d'une droite</a></li>
+            <li><a href="https://youtu.be/Hd6ym9uokPA" target="_blank">QCM Pour s'évaluer (1)</a></li>
+            <li><a href="https://youtu.be/wsxprg9WAlU" target="_blank">Équation cartésienne (vecteur normal)</a></li>
+            <li><a href="https://youtu.be/EChKrVI2NgA" target="_blank">Équation de cercle</a></li>
+            <li><a href="https://youtu.be/55Ouyd2xHKA" target="_blank">QCM Pour s'évaluer (2)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 9 — PROBABILITÉS CONDITIONNELLES
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch9">
+    <div class="chapter-header">
+      <div class="chapter-number">09</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag" style="background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#a78bfa">Proba & Stats</span>
+        </div>
+        <div class="chapter-title">Probabilités Conditionnelles & Indépendance</div>
+        <div class="chapter-desc">Probabilité conditionnelle · arbre pondéré · formule des probabilités totales · indépendance</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c2)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19CondPM.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19CondPM.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/5oBnmZVrOXE" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/JEL4hxtnw0Q" target="_blank">Probabilité conditionnelle (Tableau)</a></li>
+            <li><a href="https://youtu.be/SWmkdKxXf_I" target="_blank">Probabilité conditionnelle (Formule)</a></li>
+            <li><a href="https://youtu.be/o1HQ6xJ7o4U" target="_blank">Compléter un arbre pondéré</a></li>
+            <li><a href="https://youtu.be/Pc5kJBkPDbo" target="_blank">Construire un arbre pondéré</a></li>
+            <li><a href="https://youtu.be/qTpTBoZA7zY" target="_blank">Formule des probabilités totales</a></li>
+            <li><a href="https://youtu.be/wdiMq_lTk1w" target="_blank">Démontrer l'indépendance entre deux événements</a></li>
+            <li><a href="https://youtu.be/SD9H5OYYLz0" target="_blank">Utiliser l'indépendance (1)</a></li>
+            <li><a href="https://youtu.be/yIvN6Dh-bDg" target="_blank">Utiliser l'indépendance (2)</a></li>
+            <li><a href="https://youtu.be/gFnCzFIjtqk" target="_blank">Probabilité à deux épreuves / arbre (1)</a></li>
+            <li><a href="https://youtu.be/fSGGe2-L3Ag" target="_blank">Probabilité à deux épreuves / arbre (2)</a></li>
+            <li><a href="https://youtu.be/e7jH8a1cDtg" target="_blank">Probabilité sur une répétition d'expériences</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/Ty3xXmUPTm8" target="_blank">Probabilité à deux épreuves (arbre)</a></li>
+            <li><a href="https://youtu.be/7V7zRFislOQ" target="_blank">Exercice Bac — Proba conditionnelles (1)</a></li>
+            <li><a href="https://youtu.be/8QoucS-A3SE" target="_blank">Exercice Bac — Proba conditionnelles (2)</a></li>
+            <li><a href="https://youtu.be/GufeEqAeav8" target="_blank">Exercice Bac — Proba conditionnelles (3)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 10 — VARIABLES ALÉATOIRES
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch10">
+    <div class="chapter-header">
+      <div class="chapter-number">10</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-spe">Spécialité</span>
+          <span class="tag" style="background:rgba(52,211,153,0.1);border-color:rgba(52,211,153,0.3);color:#34d399">Proba & Stats</span>
+        </div>
+        <div class="chapter-title">Variables Aléatoires</div>
+        <div class="chapter-desc">Loi de probabilité · espérance · variance · écart-type · transformation linéaire Y = aX + b</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c3)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/19vaPM.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/19vaPM.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/krbtyBDeRqQ" target="_blank">▶ Vidéo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/IBqkrg8pxQ4" target="_blank">Calculer une proba avec une variable aléatoire (1)</a></li>
+            <li><a href="https://youtu.be/OnD_Ym95Px4" target="_blank">Calculer une proba avec une variable aléatoire (2)</a></li>
+            <li><a href="https://youtu.be/2Ge_4hclPnI" target="_blank">Déterminer une loi de probabilité (1)</a></li>
+            <li><a href="https://youtu.be/awtn6gsRwfs" target="_blank">Déterminer une loi de probabilité (2)</a></li>
+            <li><a href="https://youtu.be/AcWVxHgtWp4" target="_blank">Calculer une espérance</a></li>
+            <li><a href="https://youtu.be/CbCMJXGhC4k" target="_blank">Utiliser l'espérance pour résoudre un problème</a></li>
+            <li><a href="https://youtu.be/elpgMDSU5t8" target="_blank">Calculer variance et écart-type</a></li>
+            <li><a href="https://youtu.be/ljITvCBExVY" target="_blank">Espérance et variance avec Y = aX + b</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/_oPnmvYhJpI" target="_blank">Loi de probabilité d'une variable aléatoire</a></li>
+            <li><a href="https://youtu.be/wyU8mt591T0" target="_blank">Espérance, variance et écart-type</a></li>
+            <li><a href="https://youtu.be/f7pC3nT0N7c" target="_blank">QCM Pour s'évaluer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 11 — AUTOMATISMES (ESM)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch11">
+    <div class="chapter-header">
+      <div class="chapter-number">11</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-esm">ESM</span>
+        </div>
+        <div class="chapter-title">Automatismes</div>
+        <div class="chapter-desc">Révisions et automatismes transversaux — calcul algébrique, fonctions, pourcentages, géométrie</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c4)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes (entraînement régulier tout au long de l'année)</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Calcul & Algèbre</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/eWG8Fa3q-ZU" target="_blank">Donner un ordre de grandeur d'un résultat</a></li>
+            <li><a href="https://youtu.be/3rXse_lbAKk" target="_blank">Calculs sur les nombres relatifs</a></li>
+            <li><a href="https://youtu.be/1yV5scwCwvg" target="_blank">Calculs de fractions</a></li>
+            <li><a href="https://youtu.be/MVnogrTAGy0" target="_blank">Comparer des fractions</a></li>
+            <li><a href="https://youtu.be/cY6xdxT7kLM" target="_blank">Calculs de puissances</a></li>
+            <li><a href="https://youtu.be/tzhNCpLRtCY" target="_blank">Écriture scientifique</a></li>
+            <li><a href="https://www.youtube.com/playlist?list=PLVUDmbpupCardIQnUIk2NsPvqKlyBU8jN" target="_blank">Développer, factoriser, réduire (playlist)</a></li>
+            <li><a href="https://www.youtube.com/playlist?list=PLVUDmbpupCaodOAOOBTbTZ3OKB8QbsDvs" target="_blank">Équations et inéquations (playlist)</a></li>
+            <li><a href="https://youtu.be/50CByVTP4ig" target="_blank">Signe d'une expression factorisée du 2nd degré</a></li>
+          </ul>
+          <div class="subgroup-title">Fonctions & Graphiques</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/8cytzglu8yc" target="_blank">Images et antécédents graphiquement</a></li>
+            <li><a href="https://youtu.be/nwdv78G1kII" target="_blank">Résoudre graphiquement une équation/inéquation</a></li>
+            <li><a href="https://youtu.be/JCVotquzIIA" target="_blank">Signe d'une expression factorisée (graphique)</a></li>
+            <li><a href="https://youtu.be/BHrBGehewi0" target="_blank">Compléter un tableau de valeurs</a></li>
+            <li><a href="https://youtu.be/yGqqoBMq8Fw" target="_blank">Dresser le tableau de variations</a></li>
+            <li><a href="https://youtu.be/cUdhxkaTqqk" target="_blank">Tracer une droite (équation réduite)</a></li>
+            <li><a href="https://youtu.be/tfagLy6QRuw" target="_blank">Équation réduite d'une droite (2 points)</a></li>
+          </ul>
+          <div class="subgroup-title">Pourcentages & Évolutions</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/ixjag8jXLXk" target="_blank">Calculer avec des pourcentages</a></li>
+            <li><a href="https://youtu.be/-5QmcMuzy5I" target="_blank">Déterminer un coefficient multiplicateur</a></li>
+            <li><a href="https://youtu.be/UVXFEDUnSjI" target="_blank">Appliquer un taux d'évolution</a></li>
+            <li><a href="https://youtu.be/Y48-iK7Cp20" target="_blank">Calculer un taux d'évolution</a></li>
+            <li><a href="https://youtu.be/qOg2eXd8Hv0" target="_blank">Taux d'évolution pour plusieurs évolutions successives</a></li>
+            <li><a href="https://youtu.be/NiCxHYkpNiM" target="_blank">Taux d'évolution réciproque</a></li>
+          </ul>
+          <div class="subgroup-title">Lecture de données & Géométrie</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/CR4lSAfho5A" target="_blank">Lire un graphique, histogramme, diagramme</a></li>
+            <li><a href="https://youtu.be/gpCY_3zq3bk" target="_blank">Du graphique aux données et vice versa</a></li>
+            <li><a href="https://youtu.be/BfOFFFCm5n4" target="_blank">Calculer une aire (figure composée avec disque)</a></li>
+            <li><a href="https://youtu.be/KKon_cIVd9k" target="_blank">Calculer le volume d'une pyramide</a></li>
+            <li><a href="https://youtu.be/kMssaNRPXz8" target="_blank">Calculer le volume d'un cône</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 12 — FONCTIONS AFFINES (ESM uniquement)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch12">
+    <div class="chapter-header">
+      <div class="chapter-number">12</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-esm">ESM uniquement</span>
+        </div>
+        <div class="chapter-title">Fonctions Affines</div>
+        <div class="chapter-desc">Définition · variations · représentation graphique · signe · taux d'accroissement</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c6)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22FAOO.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22FAOO.pdf" target="_blank">📕 PDF</a>
+            <a class="file-btn video" href="https://youtu.be/n5_pRx4ozIg" target="_blank">▶ Vidéo (rappels)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/r5f6kS-8ePM" target="_blank">Reconnaître l'expression d'une fonction affine</a></li>
+            <li><a href="https://youtu.be/9x1mMKopdI0" target="_blank">Variations d'une fonction affine</a></li>
+            <li><a href="https://youtu.be/fq2sXpbdJQg" target="_blank">Représenter une fonction affine</a></li>
+            <li><a href="https://youtu.be/q68CLk2CNik" target="_blank">Représenter une fonction affine (coeff = fraction)</a></li>
+            <li><a href="https://youtu.be/OnnrfqztpTY" target="_blank">Déterminer graphiquement une fonction affine</a></li>
+            <li><a href="https://youtu.be/zZ9SbX8mC2o" target="_blank">Signe d'une fonction affine</a></li>
+            <li><a href="https://youtu.be/ssA9Sa3yksM" target="_blank">Déterminer une fonction affine — taux d'accroissement (1)</a></li>
+            <li><a href="https://youtu.be/0jX7iPWCWI4" target="_blank">Déterminer une fonction affine — taux d'accroissement (2)</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/14yBmjXXTqk" target="_blank">Représenter une fonction affine</a></li>
+            <li><a href="https://youtu.be/4K63zROwlrE" target="_blank">Déterminer graphiquement une fonction affine</a></li>
+            <li><a href="https://youtu.be/07C2lzl-xIs" target="_blank">Signe d'une fonction affine</a></li>
+            <li><a href="https://youtu.be/dQSYCKIl_XM" target="_blank">QCM Pour s'évaluer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CHAPITRE 13 — STATS & PROBA (ESM)
+  ════════════════════════════════════════════════ -->
+  <section class="chapter" id="ch13">
+    <div class="chapter-header">
+      <div class="chapter-number">13</div>
+      <div class="chapter-meta">
+        <div class="chapter-tags">
+          <span class="tag tag-esm">ESM</span>
+          <span class="tag" style="background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#a78bfa">Proba & Stats</span>
+        </div>
+        <div class="chapter-title">Statistiques & Probabilités (ESM)</div>
+        <div class="chapter-desc">Fréquences conditionnelles et marginales · proba conditionnelle · arbre pondéré · indépendance</div>
+      </div>
+    </div>
+    <div class="chapter-accent" style="background: var(--c2)"></div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">📖</span> Cours</div>
+          <span class="panel-chevron open">▼</span>
+        </div>
+        <div class="panel-body open">
+          <div class="subgroup-title">Chapitre 1</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22ProbaOO1.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22ProbaOO1.pdf" target="_blank">📕 PDF</a>
+          </div>
+          <div class="subgroup-title">Chapitre 2</div>
+          <div class="course-files">
+            <a class="file-btn word" href="https://www.maths-et-tiques.fr/telech/22ProbaOO2.docx" target="_blank">📄 Word</a>
+            <a class="file-btn pdf" href="https://www.maths-et-tiques.fr/telech/22ProbaOO2.pdf" target="_blank">📕 PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header" onclick="togglePanel(this)">
+          <div class="panel-title"><span class="icon">⚙️</span> Méthodes & Exercices corrigés</div>
+          <span class="panel-chevron">▼</span>
+        </div>
+        <div class="panel-body">
+          <div class="subgroup-title">Méthodes</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/SkhjnCoExD8" target="_blank">Fréquence conditionnelle & marginale</a></li>
+            <li><a href="https://youtu.be/7tS60nk6Z2I" target="_blank">Proba conditionnelle / tableau croisé (1)</a></li>
+            <li><a href="https://youtu.be/Shh5IdHwqqw" target="_blank">Proba conditionnelle / tableau croisé (2)</a></li>
+            <li><a href="https://youtu.be/o1HQ6xJ7o4U" target="_blank">Compléter un arbre pondéré</a></li>
+            <li><a href="https://youtu.be/Pc5kJBkPDbo" target="_blank">Construire un arbre pondéré</a></li>
+            <li><a href="https://youtu.be/OPuoB5EuOAQ" target="_blank">Démontrer que deux événements sont indépendants</a></li>
+            <li><a href="https://youtu.be/e7jH8a1cDtg" target="_blank">Probabilité sur une répétition d'expériences</a></li>
+          </ul>
+          <div class="subgroup-title">Exercices corrigés</div>
+          <ul class="link-list">
+            <li><a href="https://youtu.be/Ty3xXmUPTm8" target="_blank">Probabilité à deux épreuves (arbre)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Cours de <a href="https://www.maths-et-tiques.fr" target="_blank">maths-et-tiques.fr</a> — Yvan Monka, Académie de Strasbourg. Tous droits réservés.</p>
+    <p>Programmes 2019 (Spécialité) & 2022 (ESM). Page non officielle — usage personnel.</p>
+  </footer>
+
+</main>
+</div>
+
+<button class="mobile-menu-btn" id="menuBtn" onclick="toggleSidebar()">☰</button>
+
+<script>
+// ── Toggle panels ──
+function togglePanel(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.panel-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+// ── Progress bar ──
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+
+// ── Reveal on scroll ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05 });
+document.querySelectorAll('.chapter').forEach(el => obs.observe(el));
+
+// ── Sidebar active link ──
+const links = document.querySelectorAll('.sidebar-link');
+const sections = document.querySelectorAll('.chapter');
+
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      links.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+
+sections.forEach(s => secObs.observe(s));
+
+// ── Mobile sidebar ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// ── Search ──
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase();
+  sections.forEach(sec => {
+    const txt = sec.textContent.toLowerCase();
+    sec.style.display = txt.includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
